@@ -26,13 +26,20 @@ namespace QBRatingSystem
         QBRatingViewModel qBRatingViewModel;
         public MainWindow()
         {
-            qBRatingViewModel = new QBRatingViewModel();
-            qBRatingViewModel.SetQuarterBack(new NationalFootballLeagueQB());
-            DataContext = qBRatingViewModel;
+            DataContext = new QBRatingViewModel()
+            {
+                Quarterback = new NationalFootballLeagueQB()
+            };
             InitializeComponent();
         }
 
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
+        {
+            QBRatingViewModel qBRatingViewModel1 = DataContext as QBRatingViewModel;
+            PasserRatingLabel.Content = qBRatingViewModel1.Quarterback.PasserStats.Attempts;
+        }
+
+        private void TextBox_Error(object sender, ValidationErrorEventArgs e)
         {
 
         }

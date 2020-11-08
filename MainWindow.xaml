@@ -9,7 +9,7 @@
     <StackPanel>
         <Label Content="Enter Passer Statistics Below"/>
         <Label Content="Passing Attempts" FontWeight="Bold"/>
-        <TextBox Text="{Binding QuarterBack.Attempts }" HorizontalAlignment="Left" Height="Auto" Width="100">
+        <TextBox Text="{Binding Quarterback.PasserStats.Attempts }" HorizontalAlignment="Left" Height="Auto" Width="100" Validation.Error="TextBox_Error">
         </TextBox>
         <Label Content="Passsing Completions" FontWeight="Bold"/>
         <TextBox Text="{Binding Completions}" HorizontalAlignment="Left" Height="Auto" Width="100"/>

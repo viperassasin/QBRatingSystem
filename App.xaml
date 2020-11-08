@@ -1,7 +1,8 @@
 ﻿<Application x:Class="QBRatingSystem.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:QBRatingSystem">
+             xmlns:local="clr-namespace:QBRatingSystem"
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
          
     </Application.Resources>

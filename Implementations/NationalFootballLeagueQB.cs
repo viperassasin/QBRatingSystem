@@ -1,4 +1,4 @@
-﻿using Ninject.Modules;
+﻿
 using QBRatingSystem.Enums;
 using QBRatingSystem.Interfaces;
 using QBRatingSystem.Utility;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QBRatingSystem.Implementations
 {
-    public class NationalFootballLeagueQB :NinjectModule, IQuarterback
+    public class NationalFootballLeagueQB : IQuarterback
     {
         public PasserStats PasserStats { get; set; }
         public LevelOfPlayer PlayerLevel { get; set; }
@@ -24,11 +24,6 @@ namespace QBRatingSystem.Implementations
         public void SetPasserRating()
         {
             this.PasserStats.PasserRating = QBRatingCalculator.CalculatePasserRating(this);
-        }
-
-        public override void Load()
-        {
-            this.Bind<IQuarterback>().To<NationalFootballLeagueQB>();
         }
     }
 }
