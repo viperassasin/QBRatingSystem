@@ -11,19 +11,18 @@ using System.Threading.Tasks;
 
 namespace QBRatingSystem.Implementations
 {
-    public class NationalFootballLeagueQB : IQuarterback
+    public class NationalFootballLeagueQB : QuarterbackAware
     {
-        public PasserStats PasserStats { get; set; }
-        public LevelOfPlayer PlayerLevel { get; set; }
-        public NationalFootballLeagueQB()
-        {
-            PasserStats = new PasserStats();
-            PlayerLevel = LevelOfPlayer.NFL;
-        }
+        public int? Attempts { get; set; }
+        public int? Completions { get; set; }
+        public int? PassYards { get; set; }
+        public int? TouchDowns { get; set; }
+        public int? Interceptions { get; set; }
+        public double? PasserRating { get; set; }
 
         public void SetPasserRating()
         {
-            this.PasserStats.PasserRating = QBRatingCalculator.CalculatePasserRating(this);
+            PasserRating = QBRatingCalculator.CalculatePasserRating(this);
         }
     }
 }

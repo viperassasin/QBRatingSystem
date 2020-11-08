@@ -1,47 +1,54 @@
-﻿using System;
+﻿using QBRatingSystem.Enums;
+using QBRatingSystem.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QBRatingSystem.ViewModels
+namespace QBRatingSystem.Interfaces
 {
-    public class PasserStats
+    public interface QuarterbackAware
     {
-        public int Attempts
+        //double GetPasserRating(PasserStats passerStats);
+
+         int? Attempts
         {
             get;
             set;
         }
 
-        public int Completions
+         int? Completions
         {
             get;
             set;
         }
 
-        public int PassYards
+         int? PassYards
         {
             get;
             set;
         }
 
-        public int TouchDowns
+         int? TouchDowns
         {
             get;
             set;
         }
 
-        public int Interceptions
+         int? Interceptions
         {
             get;
             set;
         }
 
-        public double PasserRating
+         double? PasserRating
         {
             get;
             set;
         }
+
+         void SetPasserRating();
     }
 }

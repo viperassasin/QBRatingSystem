@@ -1,26 +1,36 @@
-﻿<Window x:Class="QBRatingSystem.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QBRatingSystem.ViewModels"
+    xmlns:local="clr-namespace:QBRatingSystem.Enums"
+    x:Class="QBRatingSystem.MainWindow"
         mc:Ignorable="d"
         Title="QB Passer Rating Calculator" Height="450" Width="800">
     <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="LeagueListBox" SelectedIndex="0" ItemsSource="{Binding Source={local:EnumBindingSourceExtensions {x:Type local:LevelOfPlayer}}}" Height="Auto" SelectionChanged="LeagueListBox_SelectionChanged">
+            </ComboBox>
+        </Grid>
         <Label Content="Enter Passer Statistics Below"/>
         <Label Content="Passing Attempts" FontWeight="Bold"/>
-        <TextBox Text="{Binding Quarterback.PasserStats.Attempts }" HorizontalAlignment="Left" Height="Auto" Width="100" Validation.Error="TextBox_Error">
-        </TextBox>
+        <TextBox Text="{Binding Quarterback.Attempts}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
         <Label Content="Passsing Completions" FontWeight="Bold"/>
-        <TextBox Text="{Binding Completions}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <TextBox Text="{Binding Quarterback.Completions}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
         <Label Content="Pass Yards" FontWeight="Bold"/>
-        <TextBox Text="{Binding PassYards}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <TextBox Text="{Binding Quarterback.PassYards}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
         <Label Content="Touchdowns" FontWeight="Bold"/>
-        <TextBox Text="{Binding TouchDowns}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <TextBox Text="{Binding Quarterback.TouchDowns}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
         <Label Content="Interceptions" FontWeight="Bold" />
-        <TextBox Text="{Binding Interceptions}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <TextBox Text="{Binding Quarterback.Interceptions}" HorizontalAlignment="Left" Height="Auto" Width="100">
+        </TextBox>
         <Label Content="Passer Rating" FontWeight="Bold"/>
-        <Label x:Name="PasserRatingLabel" Content="{Binding PasserRating}"/>
+        <Label x:Name="PasserRatingLabel" />
         <Button Content="Calculate" x:Name="CalculateButton" Click="CalculateButton_Click" HorizontalAlignment="Left" Height="Auto" Width="100"/>
     </StackPanel>
 </Window>

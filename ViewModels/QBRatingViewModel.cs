@@ -11,17 +11,16 @@ namespace QBRatingSystem.ViewModels
 {
     public class QBRatingViewModel
     {
-
-        public IQuarterback Quarterback { get; set; }
+        private QuarterbackAware _quarterback;
 
         public LevelOfPlayer LevelOfPlayer
         {
             get; set;
         }
 
-        public void SetQuarterBack(IQuarterback quarterback)
+        public QBRatingViewModel(QuarterbackAware quarterback)
         {
-            this.Quarterback = quarterback;
+            this._quarterback = quarterback;
         }
 
     }
