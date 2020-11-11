@@ -11,18 +11,13 @@ using System.Threading.Tasks;
 
 namespace QBRatingSystem.Implementations
 {
-    public class NationalFootballLeagueQB : QuarterbackAware
+    public class NationalFootballLeagueQB : IQuaterback
     {
         public int? Attempts { get; set; }
         public int? Completions { get; set; }
         public int? PassYards { get; set; }
         public int? TouchDowns { get; set; }
         public int? Interceptions { get; set; }
-        public double? PasserRating { get; set; }
-
-        public void SetPasserRating()
-        {
-            PasserRating = QBRatingCalculator.CalculatePasserRating(this);
-        }
+        public decimal? PasserRating { get { return QBRatingCalculator.CalculatePasserRating(this); } }
     }
 }

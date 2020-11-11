@@ -24,12 +24,6 @@ namespace QBRatingSystem
     /// </summary>
     public partial class MainWindow : Window
     {
-        [Dependency]
-        public QBRatingViewModel ViewModel
-        {
-            set { DataContext = value; }
-        }
-
         public MainWindow()
         {
             //DataContext = new QBRatingViewModel();
@@ -38,44 +32,46 @@ namespace QBRatingSystem
 
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            var qBRatingViewModel = DataContext as QBRatingSystem.ViewModels.QBRatingViewModel;
-            qBRatingViewModel.Quarterback.SetPasserRating();
-            PasserRatingLabel.Content = qBRatingViewModel.Quarterback.PasserRating;
+            var qbViewModel = DataContext as QBRatingViewModel;
+            if (qbViewModel!=null && qbViewModel.NoEmptyStats())
+            {
+                PasserRatingLabel.Content = (DataContext as QBRatingSystem.ViewModels.QBRatingViewModel).GetPasserRating(); 
+            }
         }
 
-        private void TextBox_Error(object sender, ValidationErrorEventArgs e)
-        {
-
-        }
-
-        private void LeagueListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LeagueCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ComboBox)
             {
                 var comboBox = sender as ComboBox;
-                var qBViewModel = DataContext as QBRatingViewModel;
+                QBRatingViewModel qBRatingViewModel = null;
                 switch (comboBox.SelectedItem)
                 {
-                    case LevelOfPlayer.NFL:
+                    case League.NFL:
                         {
-                            qBViewModel.SetQuarterBack(new NationalFootballLeagueQB());
+                            qBRatingViewModel = new QBRatingViewModel(new NationalFootballLeagueQB());
                             break;
                         }
-                    case LevelOfPlayer.CFL:
+                    case League.CFL:
                         {
-                            qBViewModel.SetQuarterBack(new CanadianFootbalLeagueQB());
+                            qBRatingViewModel = new QBRatingViewModel(new CanadianFootbalLeagueQB());
                             break;
                         }
-                    case LevelOfPlayer.NCAA:
+                    case League.NCAA:
                         {
-                            qBViewModel.SetQuarterBack(new NationalCollegiateAthleticAssociationQB());
+                            qBRatingViewModel = new QBRatingViewModel(new NationalCollegiateAthleticAssociationQB());
                             break;
                         }
                     default:
                         break;
                 }
-                DataContext = qBViewModel;
+                DataContext = qBRatingViewModel;
             }
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -3,34 +3,118 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:QBRatingSystem.Enums"
     x:Class="QBRatingSystem.MainWindow"
         mc:Ignorable="d"
+    xmlns:local="clr-namespace:QBRatingSystem.Enums"
+    xmlns:valid="clr-namespace:QBRatingSystem.Validation"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="QB Passer Rating Calculator" Height="450" Width="800">
+    <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <DockPanel>
+                <AdornedElementPlaceholder/>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+            </DockPanel>
+        </ControlTemplate>
+
+        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+              Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                              Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
     <StackPanel>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <ComboBox x:Name="LeagueListBox" SelectedIndex="0" ItemsSource="{Binding Source={local:EnumBindingSourceExtensions {x:Type local:LevelOfPlayer}}}" Height="Auto" SelectionChanged="LeagueListBox_SelectionChanged">
-            </ComboBox>
-        </Grid>
+        <ComboBox x:Name="LeagueCombo" SelectedIndex="0" Height="Auto" Width="Auto"  ItemsSource="{Binding Source={local:EnumBindingSourceExtensions {x:Type local:League}}}" SelectionChanged="LeagueCombo_SelectionChanged" Margin="0,0,692,0">
+        </ComboBox>
         <Label Content="Enter Passer Statistics Below"/>
-        <Label Content="Passing Attempts" FontWeight="Bold"/>
-        <TextBox Text="{Binding Quarterback.Attempts}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <Label Content="Passing Attempts" FontWeight="Bold" Target="{Binding ElementName=TextBoxAttempts}"/>
+        <TextBox Name="TextBoxAttempts" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"  HorizontalAlignment="Left" Height="Auto" Width="100">
+            <TextBox.Text>
+                <Binding Path="PassAttemps" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True" >
+                    <Binding.ValidationRules>
+                        <valid:PasserRatingValidationRules Min="0" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Label Content="Passsing Completions" FontWeight="Bold"/>
-        <TextBox Text="{Binding Quarterback.Completions}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <TextBox Name="TextBoxCompletions" HorizontalAlignment="Left" Height="Auto" Width="100">
+            <TextBox.Text>
+                <Binding Path="PassCompletions" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True">
+                    <Binding.ValidationRules>
+                        <valid:PasserRatingValidationRules Min="0" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Label Content="Pass Yards" FontWeight="Bold"/>
-        <TextBox Text="{Binding Quarterback.PassYards}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <TextBox Name="TextBoxPassYards"  HorizontalAlignment="Left" Height="Auto" Width="100">
+            <TextBox.Text>
+                <Binding Path="PassYards" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True">
+                    <Binding.ValidationRules>
+                        <valid:PasserRatingValidationRules Min="0" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
         <Label Content="Touchdowns" FontWeight="Bold"/>
-        <TextBox Text="{Binding Quarterback.TouchDowns}" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <TextBox Name="TextBoxPassTouchdowns"  HorizontalAlignment="Left" Height="Auto" Width="100">
+            <TextBox.Text>
+                <Binding Path="PassTouchdowns" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True">
+                    <Binding.ValidationRules>
+                        <valid:PasserRatingValidationRules Min="0" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Label Content="Interceptions" FontWeight="Bold" />
-        <TextBox Text="{Binding Quarterback.Interceptions}" HorizontalAlignment="Left" Height="Auto" Width="100">
+        <TextBox Name="TextBoxInterceptions"  HorizontalAlignment="Left" Height="Auto" Width="100">
+            <TextBox.Text>
+                <Binding Path="PassInterceptions" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" ValidatesOnNotifyDataErrors="True">
+                    <Binding.ValidationRules>
+                        <valid:PasserRatingValidationRules Min="0" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
         </TextBox>
         <Label Content="Passer Rating" FontWeight="Bold"/>
         <Label x:Name="PasserRatingLabel" />
-        <Button Content="Calculate" x:Name="CalculateButton" Click="CalculateButton_Click" HorizontalAlignment="Left" Height="Auto" Width="100"/>
+        <Grid HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Calculate" x:Name="CalculateButton" Click="CalculateButton_Click" HorizontalAlignment="Left" Height="Auto" Width="47">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="false" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxAttempts, Path=(Validation.HasError)}" Value="False" />
+                                    <!--<Condition Binding="{Binding ElementName=TextBoxAttempts,Path=Text.Length, Mode=OneWay}" Value="0"/>-->
+                                    <Condition Binding="{Binding ElementName=TextBoxCompletions, Path=(Validation.HasError)}" Value="False"/>
+                                    <!--<Condition Binding="{Binding ElementName=TextBoxCompletions,Path=Text.Length, Mode=OneWay}" Value="0"/>-->
+                                    <Condition Binding="{Binding ElementName=TextBoxPassYards, Path=(Validation.HasError)}" Value="False"/>
+                                    <!--<Condition Binding="{Binding ElementName=TextBoxPassYards,Path=Text.Length, Mode=OneWay}" Value="0"/>-->
+                                    <Condition Binding="{Binding ElementName=TextBoxPassTouchdowns, Path=(Validation.HasError)}" Value="False"/>
+                                    <!--<Condition Binding="{Binding ElementName=TextBoxPassTouchdowns,Path=Text.Length, Mode=OneWay}" Value="0"/>-->
+                                    <Condition Binding="{Binding ElementName=TextBoxInterceptions, Path=(Validation.HasError)}" Value="False"/>
+                                    <!--<Condition Binding="{Binding ElementName=TextBoxInterceptions,Path=Text.Length, Mode=OneWay}" Value="0"/>-->
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="true" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Column="1" Content="Reset" x:Name="ResetButton" Click="ResetButton_Click"  Height="Auto" Width="46" HorizontalAlignment="Left" Margin="0,0,-13,0"/>
+        </Grid>
     </StackPanel>
 </Window>

@@ -10,18 +10,16 @@ using System.Threading.Tasks;
 
 namespace QBRatingSystem.Implementations
 {
-    public class NationalCollegiateAthleticAssociationQB : QuarterbackAware
+    public class NationalCollegiateAthleticAssociationQB : IQuaterback
     {
-        public int? Attempts {get; set; }
-        public int? Completions {get; set; }
-        public int? PassYards {get; set; }
-        public int? TouchDowns {get; set; }
-        public int? Interceptions {get; set; }
-        public double? PasserRating {get; set; }
-
-        public void SetPasserRating()
+        public int? Attempts { get; set; }
+        public int? Completions { get; set; }
+        public int? PassYards { get; set; }
+        public int? TouchDowns { get; set; }
+        public int? Interceptions { get; set; }
+        public decimal? PasserRating
         {
-            PasserRating=QBRatingCalculator.CalculatePasserRating(this);
+            get { return QBRatingCalculator.CalculatePasserRating(this); }
         }
     }
 }

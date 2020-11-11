@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QBRatingSystem.Enums
 {
-    public enum LevelOfPlayer
+    public enum League
     {
         NFL,CFL,NCAA
     }

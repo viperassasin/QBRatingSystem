@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace QBRatingSystem.Interfaces
 {
-    public interface QuarterbackAware
+    public interface IQuaterback
     {
-        //double GetPasserRating(PasserStats passerStats);
 
          int? Attempts
         {
@@ -43,12 +42,10 @@ namespace QBRatingSystem.Interfaces
             set;
         }
 
-         double? PasserRating
+         decimal? PasserRating
         {
             get;
-            set;
         }
 
-         void SetPasserRating();
     }
 }

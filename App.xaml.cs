@@ -18,12 +18,6 @@ namespace QBRatingSystem
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            IUnityContainer container = new UnityContainer();
-            container.RegisterType<QuarterbackAware, NationalCollegiateAthleticAssociationQB>();
-            container.RegisterType<QuarterbackAware, NationalCollegiateAthleticAssociationQB>();
-            container.RegisterType<QuarterbackAware, CanadianFootbalLeagueQB>();
-            MainWindow mainWindow = container.Resolve<MainWindow>();
-            mainWindow.Show();
         }
     }
 }
