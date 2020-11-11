@@ -33,7 +33,7 @@ namespace QBRatingSystem
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
             var qbViewModel = DataContext as QBRatingViewModel;
-            if (qbViewModel!=null && qbViewModel.NoEmptyStats())
+            if (qbViewModel!=null && qbViewModel.BoxesAreValid())
             {
                 PasserRatingLabel.Content = (DataContext as QBRatingSystem.ViewModels.QBRatingViewModel).GetPasserRating(); 
             }
@@ -71,7 +71,29 @@ namespace QBRatingSystem
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-
+            PasserRatingLabel.Content = "";
+            QBRatingViewModel qbViewModel=null;
+            switch (LeagueCombo.SelectedItem)
+            {
+                case League.NFL:
+                    {
+                        qbViewModel = new QBRatingViewModel(new NationalFootballLeagueQB());
+                        break;
+                    }
+                case League.CFL:
+                    {
+                        qbViewModel = new QBRatingViewModel(new CanadianFootbalLeagueQB());
+                        break;
+                    }
+                case League.NCAA:
+                    {
+                        qbViewModel = new QBRatingViewModel(new NationalCollegiateAthleticAssociationQB());
+                        break;
+                    }
+                default:
+                    break;
+            }
+            DataContext = qbViewModel;
         }
     }
 }

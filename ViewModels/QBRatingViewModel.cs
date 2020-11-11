@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QBRatingSystem.ViewModels
 {
-    public class QBRatingViewModel:INotifyDataErrorInfo
+    public class QBRatingViewModel : INotifyDataErrorInfo
     {
         private IQuaterback _quarterback;
 
@@ -57,7 +57,7 @@ namespace QBRatingSystem.ViewModels
             set { _quarterback.TouchDowns = value; }
         }
 
-        public bool HasErrors { get; set; }=false;
+        public bool HasErrors { get; set; } = false;
 
         public decimal? GetPasserRating()
         {
@@ -66,26 +66,39 @@ namespace QBRatingSystem.ViewModels
 
         public IEnumerable GetErrors(string propertyName)
         {
-            if (string.IsNullOrEmpty(propertyName)||!HasErrors)
+            if (string.IsNullOrEmpty(propertyName) || !HasErrors)
             {
                 return null;
             }
-            return new List<String> { "Empty","Invalid" };
+            return new List<String> { "Empty", "Invalid" };
         }
 
-        public bool NoEmptyStats()
+        public bool BoxesAreValid()
         {
-            HasErrors = !PassAttemps.HasValue || !PassCompletions.HasValue || !PassYards.HasValue || !PassTouchdowns.HasValue || !PassInterceptions.HasValue;
+            bool empty = !PassAttemps.HasValue || !PassCompletions.HasValue || !PassYards.HasValue || !PassTouchdowns.HasValue || !PassInterceptions.HasValue;
+            bool passAttemptGreaterThanCompletions = PassAttemps < PassCompletions;
+            bool passAttemptsZero = PassAttemps == 0;
+            bool tdsIntsAttemptsRatio = PassTouchdowns + PassInterceptions > PassAttemps;
 
-            if (HasErrors)
+
+            if (empty)
             {
                 ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("Empty Stat"));
             }
-            else
+            else if (passAttemptsZero)
             {
-                return true;
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("Pass Attempts Can't Be Zero"));
             }
-            return false;
+            else if (passAttemptGreaterThanCompletions)
+            {
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("Pass Attempts Can't Be Greater Than Completions"));
+            }
+            else if (tdsIntsAttemptsRatio)
+            {
+                ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs("Touchdowns + Interceptions Can't Be Greater Than Attempts"));
+            }
+
+            return !empty && !passAttemptGreaterThanCompletions && !passAttemptsZero && !tdsIntsAttemptsRatio;
         }
     }
 }

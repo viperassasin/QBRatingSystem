@@ -17,7 +17,7 @@ namespace QBRatingSystem.Validation
 
            if (int.TryParse(value as string,  out result))
             {
-                return new ValidationResult(result>Min, "Value must be greate than the minimum set");
+                return new ValidationResult(result>=Min, "Value must be greate than the minimum set");
             }
             else
             {
