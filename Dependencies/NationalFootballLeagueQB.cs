@@ -1,4 +1,5 @@
-﻿using QBRatingSystem.Enums;
+﻿
+using QBRatingSystem.Enums;
 using QBRatingSystem.Interfaces;
 using QBRatingSystem.Utility;
 using QBRatingSystem.ViewModels;
@@ -8,18 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QBRatingSystem.Implementations
+namespace QBRatingSystem.Dependencies
 {
-    public class NationalCollegiateAthleticAssociationQB : IQuaterback
+    public class NationalFootballLeagueQB : IQuaterback
     {
         public int? Attempts { get; set; }
         public int? Completions { get; set; }
         public int? PassYards { get; set; }
         public int? TouchDowns { get; set; }
         public int? Interceptions { get; set; }
-        public decimal? PasserRating
-        {
-            get { return QBRatingCalculator.CalculatePasserRating(this); }
-        }
+        public decimal? PasserRating { get { return QBRatingCalculator.CalculatePasserRating(this); } }
     }
 }

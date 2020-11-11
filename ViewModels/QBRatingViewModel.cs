@@ -1,5 +1,5 @@
 ﻿using QBRatingSystem.Enums;
-using QBRatingSystem.Implementations;
+using QBRatingSystem.Dependencies;
 using QBRatingSystem.Interfaces;
 using System;
 using System.Collections;

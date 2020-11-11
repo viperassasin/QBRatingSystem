@@ -67,11 +67,11 @@
     <Compile Include="Abstract\Class1.cs" />
     <Compile Include="Enums\EnumBindingSourceExtensions.cs" />
     <Compile Include="Enums\League.cs" />
-    <Compile Include="Implementations\CanadianFootbalLeagueQB.cs" />
-    <Compile Include="Implementations\NationalCollegiateAthleticAssociationQB.cs" />
+    <Compile Include="Dependencies\CanadianFootbalLeagueQB.cs" />
+    <Compile Include="Dependencies\NationalCollegiateAthleticAssociationQB.cs" />
     <Compile Include="Interfaces\IQuaterback.cs" />
     <Compile Include="Utility\QBRatingCalculator.cs" />
-    <Compile Include="Implementations\NationalFootballLeagueQB.cs" />
+    <Compile Include="Dependencies\NationalFootballLeagueQB.cs" />
     <Compile Include="Validation\PasserRatingValidationRules.cs" />
     <Compile Include="ViewModels\QBRatingViewModel.cs" />
     <Page Include="MainWindow.xaml">
